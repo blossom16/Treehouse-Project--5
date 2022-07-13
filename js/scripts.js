@@ -7,6 +7,7 @@ const url = `https://randomuser.me/api/?results=12&inc=name,picture,email,locati
 const body = document.querySelector('body');
 const gallery = document.getElementById('gallery');
 const profiles = document.querySelectorAll(".card")
+
 //  FETCH FUNCTION
 fetch(url)
     .then (checkStatus)
@@ -65,13 +66,22 @@ function showModal(employee){
     body.insertAdjacentHTML('beforeend', modalInfo);
 } 
 
-
+//DOB formatting
 function formatDate(date) {
     const day = new Date(date).getDate();
     const month = new Date(date).getMonth();
     const year = new Date(date).getFullYear();
     return `${month}/${day}/${year}`;
   }
+
+
+//displays employee gallery and modal information
+function generateGallery(data){
+  data.map(employee=>{
+      showProfile(employee)
+  })
+  displayModal(data)
+}
 
 //displays profiles when a card is clicked
 function displayModal(data){
@@ -84,7 +94,7 @@ function displayModal(data){
   }
 }
 
-//close button functionality 
+//close button on selected profile
 function closeModal(){
     const closeBtn = document.querySelector('#modal-close-btn');
     const modal = document.querySelector('.modal-container');
@@ -94,11 +104,3 @@ function closeModal(){
 }
     
 
-
-//displays employee gallery and modal information
-function generateGallery(data){
-    data.map(employee=>{
-        showProfile(employee)
-    })
-    displayModal(data)
-}
