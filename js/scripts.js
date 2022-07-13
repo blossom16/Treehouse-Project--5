@@ -3,10 +3,10 @@
  * script.js */
 
 
-const url = `https://randomuser.me/api/?results=12&inc=name,picture,email,location,phone,dob&noinfo&nat=US`;
+const url = `https://randomuser.me/api/?results=12&inc=name,picture,email,location,cell,dob&noinfo&nat=US`;
 const body = document.querySelector('body');
 const gallery = document.getElementById('gallery');
-
+const profiles = document.querySelectorAll(".card")
 //  FETCH FUNCTION
 fetch(url)
     .then (checkStatus)
@@ -54,9 +54,9 @@ function showModal(employee){
                         <p class="modal-text">${employee.email}</p>
                         <p class="modal-text cap">${employee.location.city}</p>
                         <hr>
-                        <p class="modal-text">${employee.cell}</p>
+                        <p class="modal-text">${(employee.cell)}</p>
                         <p class="modal-text">${employee.location.street.number} ${employee.location.street.name}, ${employee.location.city}, ${employee.location.state} ${employee.location.postcode}</p>
-                        <p class="modal-text">Birthday: ${formatDob(employee.dob.date)} </p>
+                        <p class="modal-text">Birthday: ${formatDate(employee.dob.date)} </p>
                     </div>
                 </div>
     
@@ -64,16 +64,14 @@ function showModal(employee){
 
     body.insertAdjacentHTML('beforeend', modalInfo);
 } 
-function formatDob(dob){
-  dateString = "1993-01-27T02:32:04.156Z"
-  date = new Date(dateString);
 
-  d = date.getDate();
-  m = date.getMonth() + 1;
-  y = date.getFullYear();
 
-  String(m).padStart(2, "0") + "/" + String(d).padStart(2, "0") + "/" + String(y);
-}
+function formatDate(date) {
+    const day = new Date(date).getDate();
+    const month = new Date(date).getMonth();
+    const year = new Date(date).getFullYear();
+    return `${month}/${day}/${year}`;
+  }
 
 //displays profiles when a card is clicked
 function displayModal(data){
@@ -90,7 +88,7 @@ function displayModal(data){
 function closeModal(){
     const closeBtn = document.querySelector('#modal-close-btn');
     const modal = document.querySelector('.modal-container');
-    closeBtn.addEventListener('click', (e) => {
+    closeBtn.addEventListener('click', () => {
         modal.remove();
     })
 }
